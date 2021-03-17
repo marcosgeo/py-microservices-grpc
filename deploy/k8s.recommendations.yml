@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendations
+  labels:
+    app: recommendations
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: recommendations
+  template:
+    metadata:
+      labels:
+        app: recommendations
+    spec:
+      containers:
+        - name: recommendations
+          image: marcosgeo/recommendations
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendations
+spec:
+  selector:
+    app: recommendations
+  ports:
+    - protocol: TCP
+      port: 50051
+      targetPort: 50051
